@@ -4,7 +4,7 @@ require('dotenv').config();
 
 // 13XLabs: We are proud to announce the launch of our ChatGpt Telegram Bot using Nodejs.
 // replace the value below with the Telegram token you receive from @BotFather
-const bot = new TelegramBot(process.env.BOT_TOKEN, {polling: true});
+const bot = new TelegramBot(process.env.BOT_TOKEN);
 
 // OpenAI API
 const configuration  = new Configuration({
