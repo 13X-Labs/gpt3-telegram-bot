@@ -14,18 +14,40 @@ const configuration  = new Configuration({
 
 const openai = new OpenAIApi(configuration);
 
-// Matches "/echo [whatever]"
+// OpenAI's GPT-3 (Generative Pre-trained Transformer 3) is a language model that uses deep learning to produce human-like text.
+// Text-davici-003 is an open-source natural language processing (NLP) model developed by OpenAI. 
+// It is a transformer-based language model that was trained on a large corpus of text from the web. 
+// It is designed to generate human-like text, and can be used for a variety of tasks such as text summarization, 
+// question answering, and text generation.
 bot.onText(/\/m (.+)/, async (msg, match) => {
 	const resp = match[1];
 	const completion = await openai.createCompletion({
 		model: "text-davinci-003",
 		prompt: resp,
-		max_tokens: 1000,
+		max_tokens: 700,
 		temperature: 0,
 		});
 
 	await bot.sendMessage(msg.chat.id, completion.data.choices[0].text)
 });
+
+// OpenAI's text-ada-001 is a text-based artificial intelligence (AI) system designed to generate human-like text. 
+// It is based on a deep learning model called GPT-3 (Generative Pre-trained Transformer 3) and is trained on a large corpus of text. 
+// The system is capable of generating text that is coherent, consistent, and human-like. It can be used for a variety of tasks, such as summarizing text, 
+// generating stories, and answering questions.
+
+bot.onText(/\/ada (.+)/, async (msg, match) => {
+	const resp = match[1];
+	const completion = await openai.createCompletion({
+		model: "text-ada-001",
+		prompt: resp,
+		max_tokens: 700,
+		temperature: 0,
+		});
+
+	await bot.sendMessage(msg.chat.id, completion.data.choices[0].text)
+});
+
 
 // Listen for any kind of message. There are different kinds of messages.
 bot.startPolling();
