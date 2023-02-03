@@ -31,9 +31,9 @@ bot.onText(/\/m (.+)/, async (msg, match) => {
 		presence_penalty: 0.15
 		});
 
-	const dataReply = completion.data.choices[0].text + '\n \n **[Join ChatGPT Community](https://t.me/+FmApN6hcCtFmZTdl)**'
+	const dataReply = completion.data.choices[0].text + '\n\n\n<a href="https://t.me/+FmApN6hcCtFmZTdl">Join ChatGPT Community</a>'
 
-	await bot.sendMessage(msg.chat.id, dataReply)
+	await bot.sendMessage(msg.chat.id, dataReply, {parse_mode: 'HTML'})
 });
 
 // Listen for any kind of message. There are different kinds of messages.
