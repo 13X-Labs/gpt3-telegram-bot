@@ -31,7 +31,7 @@ bot.onText(/\/m (.+)/, async (msg, match) => {
 		presence_penalty: 0.15
 		});
 
-	const dataReply = completion.data.choices[0].text + '\n Join ChatGPT Community: <a href="https://t.me/+FmApN6hcCtFmZTdl">https://t.me/+FmApN6hcCtFmZTdl</a>'
+	const dataReply = completion.data.choices[0].text + '\n \n **[Join ChatGPT Community](https://t.me/+FmApN6hcCtFmZTdl)**'
 
 	await bot.sendMessage(msg.chat.id, dataReply)
 });
