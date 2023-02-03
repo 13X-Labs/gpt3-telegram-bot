@@ -26,28 +26,15 @@ bot.onText(/\/m (.+)/, async (msg, match) => {
 		prompt: resp,
 		max_tokens: 700,
 		temperature: 0,
+		top_p: 0.5,
+		frequency_penalty: 0.3,
+		presence_penalty: 0.15
 		});
 
-	await bot.sendMessage(msg.chat.id, completion.data.choices[0].text)
+	const dataReply = completion.data.choices[0].text
+
+	await bot.sendMessage(msg.chat.id, dataReply)
 });
-
-// OpenAI's text-ada-001 is a text-based artificial intelligence (AI) system designed to generate human-like text. 
-// It is based on a deep learning model called GPT-3 (Generative Pre-trained Transformer 3) and is trained on a large corpus of text. 
-// The system is capable of generating text that is coherent, consistent, and human-like. It can be used for a variety of tasks, such as summarizing text, 
-// generating stories, and answering questions.
-
-bot.onText(/\/ada (.+)/, async (msg, match) => {
-	const resp = match[1];
-	const completion = await openai.createCompletion({
-		model: "text-ada-001",
-		prompt: resp,
-		max_tokens: 700,
-		temperature: 0,
-		});
-
-	await bot.sendMessage(msg.chat.id, completion.data.choices[0].text)
-});
-
 
 // Listen for any kind of message. There are different kinds of messages.
 bot.startPolling();
