@@ -29,10 +29,12 @@ bot.onText(/\/m (.+)/, async (msg, match) => {
 		top_p: 0.5,
 		frequency_penalty: 0.3,
 		presence_penalty: 0.15
-		});
+		}).catch((error) => {
+			bot.sendMessage(msg.chat.id, 'Limit API Exceeded. Please contact administrator.')
+		})
+
 
 	const dataReply = completion.data.choices[0].text + '\n\n\n<a href="https://t.me/+FmApN6hcCtFmZTdl">Join ChatGPT Community</a>'
-
 	await bot.sendMessage(msg.chat.id, dataReply, {parse_mode: 'HTML'})
 });
 
