@@ -1,3 +1,4 @@
+const { parse } = require('dotenv');
 const TelegramBot = require('node-telegram-bot-api');
 const { Configuration, OpenAIApi } = require("openai");
 require('dotenv').config();
@@ -21,21 +22,21 @@ const openai = new OpenAIApi(configuration);
 // question answering, and text generation.
 bot.onText(/\/m (.+)/, async (msg, match) => {
 	const resp = match[1];
-	const completion = await openai.createCompletion({
+	await openai.createCompletion({
 		model: "text-davinci-003",
 		prompt: resp,
-		max_tokens: 700,
+		max_tokens: 2048,
 		temperature: 0,
 		top_p: 0.5,
+		n: 1,
 		frequency_penalty: 0.3,
 		presence_penalty: 0.15
-		}).catch((error) => {
-			bot.sendMessage(msg.chat.id, 'Limit API Exceeded. Please contact administrator.')
-		})
+	}).then((textData) => {
+		bot.sendMessage(msg.chat.id, textData.data.choices[0].text + '\n\n\n<a href="https://t.me/+FmApN6hcCtFmZTdl">Join ChatGPT Community</a>', {parse_mode: 'HTML'})
+	}).catch((err) => {
+		bot.sendMessage(msg.chat.id, 'Limit API Exceeded. Please contact administrator.')
+	})
 
-
-	const dataReply = completion.data.choices[0].text + '\n\n\n<a href="https://t.me/+FmApN6hcCtFmZTdl">Join ChatGPT Community</a>'
-	await bot.sendMessage(msg.chat.id, dataReply, {parse_mode: 'HTML'})
 });
 
 // Listen for any kind of message. There are different kinds of messages.
