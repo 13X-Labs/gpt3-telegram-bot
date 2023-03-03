@@ -17,22 +17,12 @@ We are excited to see how ChatGpt will be used by our users and look forward to 
 
 You can find ChatGPT Bot on Telegram with username: @GPT3TelegramBot or go to link : https://t.me/GPT3TelegramBot
 
-1. Create .ENV
+Go to API: https://github.com/13X-Labs/GPT3-Telegram-ChatBot-API
+
+Config .ENV
 
 ```
 BOT_TOKEN=
 OPENAI_API=
 OPENAI_ORG=''
-```
-
-2. Install
-
-```
-npm install
-```
-
-3. Node Run
-
-```
-node app.js
 ```
