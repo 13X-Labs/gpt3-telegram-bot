@@ -1,4 +1,3 @@
-const { parse } = require('dotenv');
 const TelegramBot = require('node-telegram-bot-api');
 const { Configuration, OpenAIApi } = require("openai");
 const axios = require('axios');
@@ -79,7 +78,7 @@ bot.onText(/\/idalle (.+)/, async (msg, match) => {
 	const startTime = Date.now();
 
 	// Generate the code using the Local API
-	axios.post('http://127.0.0.1:5000/generate', {
+	axios.post('https://api.13xlabs.com/api/image/generate-images-dall-e-mini', {
 		prompt: resp,
 		n_predictions: 1,
 		show_clip_score: false
@@ -107,7 +106,7 @@ bot.onText(/\/iae (.+)/, async (msg, match) => {
 	const startTime = Date.now();
 
 	// Generate the code using the Local API
-	axios.post('http://127.0.0.1:5000/generate-anime', {
+	axios.post('https://api.13xlabs.com/api/image/generate-images-anime', {
 		prompt: resp,
 		negative_prompt: null,
 		width: 768,
@@ -140,10 +139,15 @@ bot.onText(/\/ivip (.+)/, async (msg, match) => {
 
 	// Get the user input from the message
 	const resp = match[1];
+	if (resp.length > 200) {
+		// Send a message to the user if the input is too long
+		bot.sendMessage(msg.chat.id, 'The description is too long. Please enter a description shorter than 200 characters.')
+		return;
+	}
 	const startTime = Date.now();
 
 	// Generate the code using the Local API
-	axios.post('http://127.0.0.1:5000/generate-vip', {
+	axios.post('https://api.13xlabs.com/api/image/generate-images-stable-diffusion/', {
 		prompt: resp,
 		image_dimensions: "768x768",
 		negative_prompt: null,
@@ -176,9 +180,14 @@ bot.onText(/\/imidjourney (.+)/, async (msg, match) => {
 	// Get the user input from the message
 	const resp = match[1];
 	const startTime = Date.now();
+	if (resp.length > 200) {
+		// Send a message to the user if the input is too long
+		bot.sendMessage(msg.chat.id, 'The description is too long. Please enter a description shorter than 200 characters.')
+		return;
+	}
 
 	// Generate the code using the Local API
-	axios.post('http://127.0.0.1:5000/generate-midjourney', {
+	axios.post('https://api.13xlabs.com/api/image/generate-images-midjourney/', {
 		prompt: resp,
 		negative_prompt: null,
 		width: 768,
@@ -213,9 +222,14 @@ bot.onText(/\/imidjourneyw (.+)/, async (msg, match) => {
 	// Get the user input from the message
 	const resp = match[1];
 	const startTime = Date.now();
+	if (resp.length > 200) {
+		// Send a message to the user if the input is too long
+		bot.sendMessage(msg.chat.id, 'The description is too long. Please enter a description shorter than 200 characters.')
+		return;
+	}
 
 	// Generate the code using the Local API
-	axios.post('http://127.0.0.1:5000/generate-midjourney', {
+	axios.post('https://api.13xlabs.com/api/image/generate-images-midjourney/', {
 		prompt: resp,
 		negative_prompt: null,
 		width: 1024,
@@ -227,8 +241,6 @@ bot.onText(/\/imidjourneyw (.+)/, async (msg, match) => {
 		scheduler: "K_EULER",
 		seed: null
 	}).then(response => {
-		console.log(response.data[0])
-		console.log(response.data)
 		// Calculate the latency
 		const endTime = Date.now();
 		const timeTaken = (endTime - startTime) / 1000;
@@ -250,9 +262,14 @@ bot.onText(/\/imidjourneyh (.+)/, async (msg, match) => {
 	// Get the user input from the message
 	const resp = match[1];
 	const startTime = Date.now();
+	if (resp.length > 200) {
+		// Send a message to the user if the input is too long
+		bot.sendMessage(msg.chat.id, 'The description is too long. Please enter a description shorter than 200 characters.')
+		return;
+	}
 
 	// Generate the code using the Local API
-	axios.post('http://127.0.0.1:5000/generate-midjourney', {
+	axios.post('https://api.13xlabs.com/api/image/generate-images-midjourney/', {
 		prompt: resp,
 		negative_prompt: null,
 		width: 768,
