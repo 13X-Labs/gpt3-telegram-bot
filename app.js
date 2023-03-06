@@ -116,7 +116,11 @@ bot.onText(/\/iae (.+)/, async (msg, match) => {
 		guidance_scale: 12,
 		scheduler: "DPMSolverMultistep",
 		seed: null
-	}).then(response => {
+	}, {
+        headers: {
+          Authorization: `Token ${process.env.XLABS_TOKEN}`,
+        }
+      }).then(response => {
 		// console.log(response.data[0])
 		// console.log(response.data)
 		// Calculate the latency
@@ -156,7 +160,11 @@ bot.onText(/\/ivip (.+)/, async (msg, match) => {
 		guidance_scale: 7.5,
 		scheduler: "K_EULER",
 		seed: null
-	}).then(response => {
+	}, {
+        headers: {
+          Authorization: `Token ${process.env.XLABS_TOKEN}`,
+        }
+      }).then(response => {
 		console.log(response.data[0])
 		console.log(response.data)
 		// Calculate the latency
@@ -198,7 +206,11 @@ bot.onText(/\/imidjourney (.+)/, async (msg, match) => {
 		guidance_scale: 7.5,
 		scheduler: "K_EULER",
 		seed: null
-	}).then(response => {
+	}, {
+        headers: {
+          Authorization: `Token ${process.env.XLABS_TOKEN}`,
+        }
+      }).then(response => {
 		console.log(response.data[0])
 		console.log(response.data)
 		// Calculate the latency
@@ -240,7 +252,11 @@ bot.onText(/\/imidjourneyw (.+)/, async (msg, match) => {
 		guidance_scale: 7.5,
 		scheduler: "K_EULER",
 		seed: null
-	}).then(response => {
+	}, {
+        headers: {
+          Authorization: `Token ${process.env.XLABS_TOKEN}`,
+        }
+      }).then(response => {
 		// Calculate the latency
 		const endTime = Date.now();
 		const timeTaken = (endTime - startTime) / 1000;
@@ -280,7 +296,11 @@ bot.onText(/\/imidjourneyh (.+)/, async (msg, match) => {
 		guidance_scale: 7.5,
 		scheduler: "K_EULER",
 		seed: null
-	}).then(response => {
+	}, {
+        headers: {
+          Authorization: `Token ${process.env.XLABS_TOKEN}`,
+        }
+      }).then(response => {
 		console.log(response.data[0])
 		console.log(response.data)
 		// Calculate the latency
