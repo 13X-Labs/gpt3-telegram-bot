@@ -19,13 +19,16 @@ bot.onText(/\/m (.+)/, async (msg, match) => {
 	bot.sendChatAction(msg.chat.id, 'typing')
 	const resp = match[1];
 	const startTime = Date.now();
-	await openai.createChatCompletion({
-		model: "gpt-3.5-turbo",
-		messages: [{role: "user", content: resp}],
-	}).then((textData) => {
+	await axios.post('https://api.13xlabs.com/api/chatgpt/generate-text/', {
+		prompt: resp,
+	}, {
+        headers: {
+          Authorization: `Token ${process.env.XLABS_TOKEN}`,
+        }
+      }).then((textData) => {
 		const endTime = Date.now();
    		const timeTaken = (endTime - startTime) / 1000; // Convert to seconds
-		bot.sendMessage(msg.chat.id, textData.data.choices[0].message.content + `\n\nLatency: ${timeTaken}s` + '\n\n<b><a href="https://t.me/+FmApN6hcCtFmZTdl">Join ChatGPT Community</a> | <a href="https://congdongchatgpt.com/">Cộng Đồng ChatGPT Vietnam</a></b>', {reply_to_message_id: msg.message_id, parse_mode: 'HTML', disable_web_page_preview: true})
+		bot.sendMessage(msg.chat.id, textData.data.text.choices[0].message.content + `\n\nLatency: ${timeTaken}s` + '\n\n<b><a href="https://t.me/+FmApN6hcCtFmZTdl">Join ChatGPT Community</a> | <a href="https://congdongchatgpt.com/">Cộng Đồng ChatGPT Vietnam</a></b>', {reply_to_message_id: msg.message_id, parse_mode: 'HTML', disable_web_page_preview: true})
 	}).catch((err) => {
 		bot.sendMessage(msg.chat.id, 'Limit API Exceeded. Please contact administrator.')
 	})
@@ -48,54 +51,6 @@ bot.onText(/\/i (.+)/, async (msg, match) => {
 	})
 });
 
-bot.onText(/\/c (.+)/, async (msg, match) => {
-	// Show the "typing" action while generating the code
-	bot.sendChatAction(msg.chat.id, 'typing');
-  
-	// Get the user input from the message
-	const resp = match[1];
-	const startTime = Date.now();
-	// Generate the code using the OpenAI API
-	promtCode = 'You will now act as a prompt generator. I will describe an ideas code to you, and you will write code and Markdown HTML on telegram'
-	await openai.createChatCompletion({
-		model: "gpt-3.5-turbo",
-		messages: [{role: "system", content: promtCode + `\n\n${resp}`}],
-	}).then((textData) => {
-		const endTime = Date.now();
-		const timeTaken = (endTime - startTime) / 1000; // Convert to seconds
-		bot.sendMessage(msg.chat.id, textData.data.choices[0].message.content + `\n\nLatency: ${timeTaken}s` + '\n\n<b><a href="https://t.me/+FmApN6hcCtFmZTdl">Join ChatGPT Community</a> | <a href="https://congdongchatgpt.com/">Cộng Đồng ChatGPT Vietnam</a></b>', {reply_to_message_id: msg.message_id, parse_mode: 'HTML', disable_web_page_preview: true})
-	}).catch((err) => {
-		bot.sendMessage(msg.chat.id, 'Limit API Exceeded. Please contact administrator.')
-	})
-});
-
-bot.onText(/\/idalle (.+)/, async (msg, match) => {
-	// Show the "typing" action while generating the code
-	bot.sendChatAction(msg.chat.id, 'upload_photo');
-
-	// Get the user input from the message
-	const resp = match[1];
-	const startTime = Date.now();
-
-	// Generate the code using the Local API
-	axios.post('https://api.13xlabs.com/api/image/generate-images-dall-e-mini', {
-		prompt: resp,
-		n_predictions: 1,
-		show_clip_score: false
-	}).then(response => {
-		// Calculate the latency
-		const endTime = Date.now();
-		const timeTaken = (endTime - startTime) / 1000;
-		// Send the result to the user
-		const message = `<a href="${response.data[0].image}">Image</a>\n\nLatency: ${timeTaken}s\n\n<b><a href="https://t.me/+FmApN6hcCtFmZTdl">Join ChatGPT Community</a> | <a href="https://congdongchatgpt.com/">Cộng Đồng ChatGPT Vietnam</a></b>`;
-		bot.sendMessage(msg.chat.id, message, {
-			reply_to_message_id: msg.message_id,
-			parse_mode: 'HTML'
-		});
-	}).catch(error => {
-		bot.sendMessage(msg.chat.id, 'Limit API Exceeded. Please contact administrator.')
-	});
-});
 
 bot.onText(/\/iae (.+)/, async (msg, match) => {
 	// Show the "typing" action while generating the code
@@ -121,8 +76,6 @@ bot.onText(/\/iae (.+)/, async (msg, match) => {
           Authorization: `Token ${process.env.XLABS_TOKEN}`,
         }
       }).then(response => {
-		// console.log(response.data[0])
-		// console.log(response.data)
 		// Calculate the latency
 		const endTime = Date.now();
 		const timeTaken = (endTime - startTime) / 1000;
